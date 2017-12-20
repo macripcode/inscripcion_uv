@@ -1,0 +1,587 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Admisiones Univalle</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}">
+    
+    
+    
+
+    <!-- Custom Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Catamaran:100,200,300,400,500,600,700,800,900" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Muli" rel="stylesheet">
+
+    <!-- Plugin CSS -->
+    <link rel="stylesheet" href="{% static 'vendor/font-awesome/css/font-awesome.min.css' %}">
+    <link rel="stylesheet" href="{% static 'vendor/font-awesome/css/font-awesome.min.css' %}">
+    <link rel="stylesheet" href="{% static 'vendor/simple-line-icons/css/simple-line-icons.css' %}">
+    <link rel="stylesheet" href="{% static 'vendor/device-mockups/device-mockups.min.css' %}">
+
+    <!-- Theme CSS -->
+    <link rel="stylesheet" href="{% static 'css/new-age.css' %}">
+    <link rel="stylesheet" href="{% static 'css/jquery-ui.css' %}">
+    <link rel="stylesheet" href="{% static 'css/jquery-ui.theme.css' %}">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!--Fuente-->
+    <link rel="stylesheet" href="{% static 'icomoon/style.css' %}">
+
+
+</head>
+
+<body id="page-top">
+
+    <nav id="mainNav" class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
+                </button>
+                <a class="navbar-brand page-scroll" href="login/" >Iniciar Sesión</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a class="page-scroll" href="#calendario_inscripcion">Calendario de Inscripción</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="#oferta_academica">Oferta Académica</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="#formulario_inscripcion_up">Inscribirse</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container-fluid -->
+    </nav>
+
+    <header>
+      <div class="container">
+          <div class="row">
+              <div class="col-sm-12">
+                  <div id="titulo_perfiles" class="col-sm-offset-2 col-sm-8">
+                    <div class="text-center">
+                      <img src="{% static 'img/adm9.jpg'%}" id="imagen_bienvenida_perfiles" class="img-responsive" />
+                    </div>
+                    <h1 class="titulo_bienvenida_perfiles text-center">Bienvenido a la Universidad del Valle!</h1>
+                  </div>
+              </div>
+          </div>
+      </div>
+    </header>
+
+    <section id="calendario_inscripcion" class="download bg-primary text-center">
+        <div class="container">
+            <div class="row">
+                <div class="bordes_div col-md-8 col-md-offset-2">
+                    <h2 class="section-heading titulos">Calendario de Inscripción</h2>
+                    <div class="espacio_titulo"></div>
+                    <p class="titulos_calendario">Adquisición de Pin:</p>
+                      <p class="parrafo_calendario" id="fechas_adquirir_pin">Del {{ inicioPin }} hasta {{ finPin }}</p>
+                    <p class="titulos_calendario">Inscripciones:</p>
+                      <p class="parrafo_calendario" id="fechas_inscripciones">Hasta el {{ limiteInscripcion }}</p>
+                    <p class="titulos_calendario">Donde Comprar el Pin :</p>
+                      <p class="parrafo_calendario" id="lugar_pin"> {{ lugarPin }} </p>
+                    <p class="titulos_calendario">Publicación de admitidos:</p>
+                      <p class="parrafo_calendario" id="publicacion_admitidos"> {{ resultadosAdmitidos }}</p>
+                    <a href="#" onclick="return false;" id="btn_mostrar_admitidos_up_enlace">Mostrar Admitidos</a>
+                    <br>
+                    <div id="panel_mlis_up" class="col-md-8 col-md-offset-2">
+                      <form class="form-inline">
+                        <div id="espacio_formulario_ga" class="espacio_formulario"></div>
+                        <div class ="form-group col-sm-12">
+                          <label for="usuario_operador" class="col-sm-6">Seleccione el Programa Académico:</label>
+                          <select class="col-sm-6 form-control sombra_gris_select" id="select_programa_ga_up">
+                              <option value="0">Seleccione</option>
+                              {% for pa in all_pa %}
+                                {%if pa.disponibilidad_pa == True %}
+                              <option value="{{ pa.codigo_pa }}">{{ pa.nombre_pa }}</option>
+                                {%endif%}
+                              {%endfor%}
+                          </select>
+                        </div>
+                        <a href="#" onclick="return false;" id="btn_mostrar_admitidos_up" class="col-sm-6 col-sm-offset-3 btn_pequeno btn btn-outline btn-sm">Mostrar Admitidos</a>
+                      
+                      <div id="mostrar_lista_admitidos_up"></div>
+                      </form>
+                    </div>
+                      
+                    <!---->
+                    
+                    
+                                
+                                
+                            
+                          
+                    <!---->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="oferta_academica" class="features">
+        <div class="container">
+            <div class="row">
+                <div class="bordes_div col-md-8 col-md-offset-2">
+                    <div class="section-heading">
+                        <div class="espacio_titulo"></div>
+                        <h2 id="titulo_oa_up" class="titulos text-center">Oferta de Programas Académicos</h2>
+                        <div>
+                            {% for facultad in all_facultad %}
+                            <button class="accordion">{{ facultad.nombre_facultad }}</button>
+                            <div class="panel panel_programas_academicos">
+                                {% for pa in all_pa %}
+                                  {% if pa.facultad_pa.nombre_facultad == facultad.nombre_facultad %}
+                                      {%if pa.disponibilidad_pa == True %}
+                                        <ul>
+                                            <li><a href="#" onclick="return false;" id="a_{{ pa.codigo_pa }}" class="pa_desplegable" > {{ pa.nombre_pa }}</a>
+                                              <div id="div_des_{{ pa.codigo_pa }}" class="div_desplegable_pa">
+                                                </br>
+                                                <p>Código:<span>{{ pa.codigo_pa }}</span></p></br>
+                                                <p>Descripción:<span>{{ pa.descripcion_pa }}</span></p></br>
+                                                <p>Dedicación:<span>{{ pa.dedicacion_pa }}</span></p></br>
+                                                <p>Jornada:<span>{{ pa.jornada_pa }}</span></p></br>
+                                                <p>Procentajes por Asignatura ICFES</p></br>
+                                                <p>Matemática:<span>{{ pa.icfes_mat_pa }}%</span></p>
+                                                <p>Lectura Crítica:<span>{{ pa.icfes_lec_pa }}%</span></p>
+                                                <p>Ciencias Sociales:<span>{{ pa.icfes_soc_pa }}%</span></p>
+                                                <p>Ciencias Naturales:<span>{{ pa.icfes_nat_pa }}%</span></p>
+                                                <p>Inglés:<span>{{ pa.icfes_ing_pa }}%</span></p></br>
+                                                <p>Puntaje Global Mínimo para Inscripción:<span>{{ pa.puntaje_global_pa }}</span></p></br>
+                                                {% if  pa.pruebat_pa == True%}
+                                                  <p>Prueba Técnica:<span>Sí</span></p></br>
+                                                {% else %}
+                                                  <p>Prueba Técnica:<span>No</span></p></br>
+                                                {%endif%}
+                                              </div>
+                                            </li>
+                                        </ul>
+                                        {%endif%}
+                                    {%endif%}
+                                {% endfor %}
+                            </div>
+                          {% endfor %}
+                        </div>
+                        <hr>
+                    </div>
+                </div>
+            </div>
+    </section>
+
+    <section class="cta">
+        <div class="cta-content">
+            <div class="container">
+                <h2 id="titulo_inscribase_up">Inicie sus estudios profesionales.</h2>
+                <a href="#formulario_inscripcion_up" id="btn_inscribirse_up" class="btn btn-outline btn-sm page-scroll">Inscribirse</a>
+            </div>
+        </div>
+        <div class="overlay"></div>
+    </section>
+
+
+    <!--Formulario de Inscripcion-->
+    
+    <!--Formulario de Inscripcion 2-->
+            <section id="formulario_inscripcion_up" class="features">
+              <div class="container">
+                <div class="row">
+                    <div class="bordes_div col-md-8 col-md-offset-2">
+                      <div class="section-heading">
+                        <div class="espacio_titulo"></div>
+                          <h2 id="titulo_oa_up" class="titulos text-center">Formulario de Inscripción</h2>
+                        <div>
+                        <p>Ingrese sus datos en los siguientes apartados.</p>
+                        <form id="formulario_inscripcion" class="form-horizontal" method='POST' enctype="multipart/form-data" action="realizar_inscripcion/">
+                          {% csrf_token %}
+                          <div id="panel_ic_ins">Ingreso Clave</div>
+                          <div class="panel panel_dp_up col-sm-12" id="panel_ic_up">
+                            <div class="form-group">
+                              <div id="espacio_formulario_up"></div>
+                              <p></p>
+                              <label class="control-label col-md-2 col-sm-2" for="{{ form_inscripcion.codigo_inscripcion.id_for_label }}">Código:</label>
+                              <div class="col-md-4 col-sm-10">
+                                {{ form_inscripcion.codigo_inscripcion}}
+                                <div id="error_input_codigo"></div>
+                              </div>
+                              <div id="espacio_formulario_up"></div>
+                              <label class="control-label col-md-2 col-sm-2" for="{{ form_inscripcion.clave_inscripcion.id_for_label }}">Clave:</label>
+                              <div class="col-md-4 col-sm-10">
+                                {{ form_inscripcion.clave_inscripcion}}
+                                <div id="error_input_clave"></div>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div id="panel_da_ins">Datos Personales</div>
+                          <div class="panel panel_dp_up col-sm-12" id="panel_dp_up">
+                            <div class="form-group">
+                              <div id="espacio_formulario_up"></div>
+                              <label class="control-label col-md-2 col-sm-2" for="{{ form_inscripcion.tipo_id_inscripcion.id_for_label }}">Tipo ID:</label>
+                              <div class="col-md-4 col-sm-10">
+                                {{ form_inscripcion.tipo_id_inscripcion}}
+                                <div id="error_input_t_id"></div>
+                              </div>
+                              <div id="espacio_formulario_up"></div>
+                              <label class="control-label col-md-2 col-sm-2" for="{{ form_inscripcion.numero_id_inscripcion.id_for_label }}">Identificación:</label>
+                              <div class="col-md-4 col-sm-10">
+                                {{ form_inscripcion.numero_id_inscripcion}}
+                                <div id="error_input_n_identificacion"></div>
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <div id="espacio_formulario_up"></div>
+                              <label class="control-label col-md-2 col-sm-2" for="{{ form_inscripcion.nombre_inscripcion.id_for_label }}">Nombre:</label>
+                              <div class="col-md-4 col-sm-10">
+                                {{ form_inscripcion.nombre_inscripcion}}
+                                <div id="error_input_nombre"></div>
+                              </div>
+                              <div id="espacio_formulario_up"></div>
+                              <label class="control-label col-md-2 col-sm-2" for="{{ form_inscripcion.apellido_inscripcion.id_for_label }}">Apellido:</label>
+                              <div class="col-md-4 col-sm-10">
+                                {{ form_inscripcion.apellido_inscripcion}}
+                                <div id="error_input_apellido"></div>
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <label class="control-label col-md-2 col-sm-2" for="{{ form_inscripcion.direccion_inscripcion.id_for_label}}">Dirección:</label>
+                              <div class="col-md-4 col-sm-10">
+                              {{ form_inscripcion.direccion_inscripcion}}
+                                <div id="error_input_direccion"></div>
+                              </div>
+                              <div id="espacio_formulario_up"></div>
+                              <label class="control-label col-md-2 col-sm-2" for="{{ form_inscripcion.barrio_inscripcion.id_for_label}}">Barrio:</label>
+                              <div class="col-md-4 col-sm-10">
+                                {{ form_inscripcion.barrio_inscripcion}}
+                                <div id="error_input_barrio"></div>
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <label class="control-label col-md-2 col-sm-2" for="{{ form_inscripcion.estrato_inscripcion.id_for_label}}">Estrato:</label>
+                              <div class="col-md-4 col-sm-10">
+                                {{ form_inscripcion.estrato_inscripcion}}
+                                <div id="error_input_estrato"></div>
+                              </div>
+                              <div id="espacio_formulario_up"></div>
+                              <label class="control-label col-md-2 col-sm-2" for="{{ form_inscripcion.comuna_inscripcion.id_for_label}}">Comuna:</label>
+                              <div class="col-md-4 col-sm-10">
+                                {{ form_inscripcion.comuna_inscripcion}}
+                                <div id="error_input_comuna"></div>
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <label class="control-label col-md-2 col-sm-2" for="{{ form_inscripcion.departamento_inscripcion.id_for_label}}">Departamento:</label>
+                              <div class="col-md-4 col-sm-10">
+                                {{ form_inscripcion.departamento_inscripcion}}
+                                <div id="error_input_departamento"></div>
+                              </div>
+                              <div id="espacio_formulario_up"></div>
+                              <label class="control-label col-md-2 col-sm-2" for="{{ form_inscripcion.municipio_inscripcion.id_for_label}}">Municipio:</label>
+                              <div class="col-md-4 col-sm-10">
+                                {{ form_inscripcion.municipio_inscripcion}}
+                                <div id="error_input_municipio"></div>
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <label class="control-label col-md-2 col-sm-2" for="{{ form_inscripcion.telefono_inscripcion.id_for_label}}">Teléfono:</label>
+                              <div class="col-md-4 col-sm-10">
+                                {{ form_inscripcion.telefono_inscripcion}}
+                                <div id="error_input_telefono"></div>
+                              </div>
+                              <div id="espacio_formulario_up"></div>
+                              <label class="control-label col-md-2 col-sm-2" for="{{ form_inscripcion.email_inscripcion.id_for_label}}">E-mail:</label>
+                              <div class="col-md-4 col-sm-10">
+                                {{ form_inscripcion.email_inscripcion}}
+                                <div id="error_input_email"></div>
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <label class="control-label col-md-2 col-sm-2" for="{{ form_inscripcion.n_acudiente_inscripcion.id_for_label}}">Nombre:</label>
+                              <div class="col-md-4 col-sm-10">
+                                {{ form_inscripcion.n_acudiente_inscripcion}}
+                                <div id="error_input_acudiente"></div>
+                              </div>
+                              <div id="espacio_formulario_up"></div>
+                              <label class="control-label col-md-2 col-sm-2" for="{{ form_inscripcion.telefono_acudiente_inscripcion.id_for_label}}">Teléfono:</label>
+                              <div class="col-md-4 col-sm-10">
+                                {{ form_inscripcion.telefono_acudiente_inscripcion}}
+                                <div id="error_input_t_acudiente"></div>
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <label class="control-label col-md-2 col-sm-2" for="{{ form_inscripcion.estado_civil_inscripcion.id_for_label}}">Estado Civíl:</label>
+                              <div class="col-md-4 col-sm-10">
+                                {{ form_inscripcion.estado_civil_inscripcion}}
+                                <div id="error_input_e_civil"></div>
+                              </div>
+                              <div id="espacio_formulario_up"></div>
+                              <label class="control-label col-md-2 col-sm-2" for="{{ form_inscripcion.n_hijos_inscripcion.id_for_label}}">No. de hijos:</label>
+                              <div class="col-md-4 col-sm-10">
+                                {{ form_inscripcion.n_hijos_inscripcion}}
+                                <div id="error_input_n_hijos"></div>
+                              </div>
+                            </div>
+                          </div>
+
+                          <!--Inicia Panel Inscripcion Institucion-->
+                          <div id="panel_institucion_ins">Institución</div>
+                          <div id="div_institucion" class="col-md-12 panel panel_dp_up">
+                            <p class="text-center parrafo_inscripciones">
+                              Institución donde culminó su bachillerato
+                            </p>
+                            <div class="form-group">
+                              <label class="control-label col-md-2 col-sm-2" for="{{ form_inscripcion.nombre_col_inscripcion.id_for_label}}">Nombre:</label>
+                              <div class="col-md-4 col-sm-10">
+                                {{ form_inscripcion.nombre_col_inscripcion}}
+                                <div id="error_input_nombre_colegio"></div>
+                              </div>
+                              <div id="espacio_formulario_up"></div>
+                              <label class="control-label col-md-2 col-sm-2" for="{{ form_inscripcion.codigo_col_inscripcion.id_for_label}}">Código:</label>
+                              <div class="col-md-4 col-sm-10">
+                                {{ form_inscripcion.codigo_col_inscripcion}}
+                                <div id="error_input_c_dane"></div>
+                              </div>
+                              
+                            </div>
+                            <div class="form-group">
+                              <label class="control-label col-md-2 col-sm-2" for="{{ form_inscripcion.estamento_col_inscripcion.id_for_label}}">Estamento:</label>
+                              <div class="col-md-4 col-sm-10">
+                                {{ form_inscripcion.estamento_col_inscripcion}}
+                              </div>
+                              <div id="espacio_formulario_up"></div>
+                              <label class="control-label col-md-2 col-sm-2" for="{{ form_inscripcion.valor_p_col_inscripcion.id_for_label}}">Valor Pensión:</label>
+                              <div class="col-md-4 col-sm-10">
+                                {{ form_inscripcion.valor_p_col_inscripcion}}
+                                <div id="error_input_pension_colegio"></div>
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <label class="control-label col-md-2 col-sm-2" for="{{ form_inscripcion.direccion_col_inscripcion.id_for_label}}">Dirección:</label>
+                              <div class="col-md-4 col-sm-10">
+                                {{ form_inscripcion.direccion_col_inscripcion}}
+                              </div>
+                              <div id="espacio_formulario_up"></div>
+                              <label class="control-label col-md-2 col-sm-2" for="{{ form_inscripcion.telefono_col_inscripcion.id_for_label}}">Teléfono:</label>
+                              <div class="col-md-4 col-sm-10">
+                                {{ form_inscripcion.telefono_col_inscripcion}}
+                              </div>
+                            </div>
+                          </div>
+                          <!--Termina Panel Inscripcion Institucion-->
+
+                          <!--Inicia Panel ICFES Institucion-->
+                          <div id="panel_icfes_ins">ICFES</div>
+                          <div id="div_icfes" class="col-md-12 panel panel_dp_up">
+                            <p class="text-center parrafo_inscripciones">
+                              Examen de estado ICFES
+                            </p>
+                            <div id="espacio_formulario_up"></div>
+                            <div class="form-group">
+                              <label class="control-label col-md-2 col-sm-2" for="{{ form_inscripcion.registro_icfes_inscripcion.id_for_label}}">Registro:</label>
+                              <div class="col-md-10 col-sm-10">
+                                {{ form_inscripcion.registro_icfes_inscripcion}}
+                                <div id="error_input_codigo_snies"></div>
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <label class="control-label col-md-2 col-sm-2" for="{{ form_inscripcion.p_global_icfes_inscripcion.id_for_label}}">Global:</label>
+                              <div class="col-md-4 col-sm-10">
+                                {{ form_inscripcion.p_global_icfes_inscripcion}}
+                                <div id="error_input_global"></div>
+                              </div>
+                              <label class="control-label col-md-2 col-sm-2" for="{{ form_inscripcion.p_mat_icfes_inscripcion.id_for_label}}">Matemáticas:</label>
+                              <div class="col-md-4 col-sm-10">
+                                {{ form_inscripcion.p_mat_icfes_inscripcion}}
+                                <div id="error_input_mat"></div>
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <label class="control-label col-md-2 col-sm-2" for="{{ form_inscripcion.p_lec_icfes_inscripcion.id_for_label}}">Lectura:</label>
+                              <div class="col-md-4 col-sm-10">
+                                {{ form_inscripcion.p_lec_icfes_inscripcion}}
+                                <div id="error_input_lec"></div>
+                              </div>
+                              <label class="control-label col-md-2 col-sm-2" for="{{ form_inscripcion.p_soc_icfes_inscripcion.id_for_label}}">Sociales:</label>
+                              <div class="col-md-4 col-sm-10">
+                                {{ form_inscripcion.p_soc_icfes_inscripcion}}
+                                <div id="error_input_soc"></div>
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <label class="control-label col-md-2 col-sm-2" for="{{ form_inscripcion.p_nat_icfes_inscripcion.id_for_label}}">Naturales:</label>
+                              <div class="col-md-4 col-sm-10">
+                                {{ form_inscripcion.p_nat_icfes_inscripcion}}
+                                <div id="error_input_nat"></div>
+                              </div>
+                              <label class="control-label col-md-2 col-sm-2" for="{{ form_inscripcion.p_ing_icfes_inscripcion.id_for_label}}">Inglés:</label>
+                              <div class="col-md-4 col-sm-10">
+                                {{ form_inscripcion.p_ing_icfes_inscripcion}}
+                                <div id="error_input_ing"></div>
+                              </div>
+                            </div>
+                          </div>    
+                          <!--Termina Panel ICFES Institucion-->
+                          <!--Inicia Panel Programa Academico Institucion-->
+                          <div id="panel_pa_ins">Programa Académico</div>
+                          <div id="div_programa_academico" class="col-md-12 panel panel_dp_up">
+                            <p class="text-center parrafo_inscripciones">
+                              Programa Académico al que aspira
+                            </p>
+                            <div id="espacio_formulario_up"></div>
+                            <div class="form-group">
+                              <label class="control-label col-md-2 col-sm-2" for="{{ form_inscripcion.p_academico_inscripcion.id_for_label}}">Plan:</label>
+                              <div class="col-md-4 col-sm-10">
+                                {{ form_inscripcion.p_academico_inscripcion}}
+                                <div id="error_input_pa"></div>
+                              </div>
+                              <div id="espacio_formulario_up"></div>
+                              <label class="control-label col-md-2 col-sm-2" for="{{ form_inscripcion.sede_p_inscripcion.id_for_label}}">Sede:</label>
+                              <div class="col-md-4 col-sm-10">
+                                {{ form_inscripcion.sede_p_inscripcion}}
+                                <div id="error_input_sede"></div>
+                              </div>
+                            </div>
+                          </div>
+                          <!--Termina Panel Programa Academico  Institucion-->
+                          <!--Inicia Panel Documentos Institucion-->
+                          <div id="panel_documentos_ins">Documentos</div>
+                          <div id="div_documentos" class="col-md-12 panel panel_dp_up">
+                            <p class="text-center parrafo_inscripciones">
+                              Por favor cargue sus documentos
+                            </p>
+                            <div id="espacio_formulario_up"></div>
+                            <div class="col-md-6">
+                              <ul id="lista_documentos">
+                                <li>Cédula al 150% <span class="fuente icon-search"></span>{{ form_inscripcion.cedula_inscripcion}}</li>
+                                <li>Acta de Bachiller <span class="fuente icon-search"></span>{{ form_inscripcion.a_bachiller_inscripcion}}</li>
+                                <li>Certificado de Votación <span class="fuente icon-search"></span>{{ form_inscripcion.cer_votacion_inscripcion}}</li>
+                              </ul>
+                            </div>
+                            <div id="espacio_formulario_up"></div>
+                          </div>
+                          <!--Termina Panel Documentos Institucion-->
+                          <!--Inicia Panel Finalizar-->
+                          <div id="panel_finalizar_ins">Finalizar</div>
+                          <div id="div_finalizar" class="col-md-12 panel panel_dp_up">
+                            <p class="text-center parrafo_inscripciones">
+                              Usted está terminando su inscripción. Por favor revise que todos los datos y documentos
+                              sean correctos. Para finalizar la inscripción presione el siguiente botón.
+                            </p>
+                            <div>{{ captcha.captcha_field }}</div>
+                            <div id="espacio_formulario_up"></div>
+                            <br/>
+                            
+                            <br/>
+                            <div class="form-group col-sm-12">
+                                <a id="btn_fi_finalizar_up" href="#" onclick="document.getElementById('formulario_inscripcion').submit(); return false;"  class="col-sm-8 col-sm-offset-2 btn btn-outline btn-sm page-scroll">Terminar y Enviar</a>
+                              
+                            </div>
+                            <div class="form-group col-sm-12">
+                                <p>{{ mensaje }}</p>
+                            </div>
+                          </div>
+                        </form>
+                        <!--Termina Panel Finalizar-->
+                      </div>
+                      <hr>
+                    </div>
+                </div>
+            </div>
+          </section>
+    
+    <!--Termina Formulario de Inscripcion 2-->
+
+    <!--Inicia Formulario de inscripcion alternativo-->
+    <!--section id="formulario_inscripcion_up" class="features">
+        <div class="container">
+            <div class="row">
+                <div class="bordes_div col-md-8 col-md-offset-2">
+                    <div class="section-heading">
+                        <div class="espacio_titulo"></div>
+                        <h2 id="titulo_oa_up" class="titulos text-center">Formulario de Inscripción</h2>
+                        <div>
+                              <button class="accordion">Registro</button>
+                              <div class="panel panel_dp_up col-sm-12" id="panel_dp_up">
+                                <form method='POST' action='captcha.php'> {% csrf_token %}
+                                  {{ formularioInscripcion.as_p }}
+                                  <div class="g-recaptcha" data-sitekey="6LeA3QoUAAAAAMZcQEiqSuKivtecER64Mve2xPJe"></div>
+                                  <input type= 'submit' value = 'Guardar'/>
+                                </form>
+                                 
+                              </div>
+
+                              <!--Inicia Panel Finalizar Institucion-->
+                              <!--div id="div_finalizar" class="col-md-12">
+                                <form class="form-horizontal" >
+                                  <p class="text-center parrafo_inscripciones">
+                                    Usted está terminando su inscripción. Por favor revise que todos los datos y div_documentos
+                                    sean correctos. Para finalizar la inscripción presione el siguiente botón.
+                                  </p>
+                                  <div id="espacio_formulario_up"></div>
+                                  <div class="form-group col-sm-12">
+                                      <a id="btn_fi_finalizar_up" href="#" onclick="return false;" class="col-sm-8 col-sm-offset-2 btn btn-outline btn-sm page-scroll">Terminar y Enviar</a>
+                                  
+                                  </div>
+                                   
+
+                                </form>
+                               
+                              </div>
+                              <!--Termina Panel Finalizar Institucion-->
+                             
+                        <!---->
+                        <!--hr>
+                    </div>
+                </div>
+            </div>
+    </section-->
+    <!--Termina Formulario de inscripcion alternativo-->
+
+    <footer>
+        <div class="container">
+            <p>&copy; Admisiones Universidad del Valle. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+    
+    
+
+    <!-- jQuery -->
+    <script src="{% static 'vendor/jquery/jquery-min.js' %}"></script>
+    <script src="{% static 'js/jquery-ui.js' %}"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="{% static 'vendor/bootstrap/js/bootstrap.min.js' %}"></script>
+
+    <!-- Plugin JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+    
+    <!--script src='https://www.google.com/recaptcha/api.js'></script-->
+
+    <!-- Theme JavaScript -->
+    <script src="{% static 'js/new-age.js' %}"></script>
+    
+
+</body>
+
+</html>
